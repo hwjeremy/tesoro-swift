@@ -119,14 +119,46 @@ An HTTP request response could not be cast as an `HTTPURLResponse`
         
         guard httpResponse.statusCode == 200 else {
             
+            let code = httpResponse.statusCode
+            
             #if DEBUG
+            
+            var bodyData: String = "<nil>"
+            
+            if let body = requestBody,
+               let jsonData = try? JSONEncoder().encode(body),
+               let stringBody = String(data: jsonData, encoding: .utf8) {
+
+                bodyData = stringBody
+                
+            }
+
+            print("A request to Tesoro API failed.")
             print("Request to: \(url.absoluteString)")
             print("Request headers:")
             print(request.allHTTPHeaderFields ?? "<nil>")
+            print("Request body: \(bodyData)")
+            print("Response code: \(code)")
+            print("Response body:")
+            
+            if let bodyData = String(data: data, encoding: .utf8) {
+                print(bodyData)
+            } else {
+                print("<unavailable>")
+            }
+    
             #endif
             
+            var m: String = ""
+            if let response = try? Self.jsonDecoder.decode(
+                ErrorResponse.self,
+                from: data
+            ) {
+                m = ". Message: \(response.technicalMessage)"
+            }
+            
             throw TesoroError(clientFacingFriendlyMessage: """
-The Tesoro API responded to a request with a \(httpResponse.statusCode) code
+The Tesoro API responded to a request with a \(code) code\(m)
 """)
         }
 
@@ -134,6 +166,13 @@ The Tesoro API responded to a request with a \(httpResponse.statusCode) code
 
         return decoded
     
+    }
+    
+    struct ErrorResponse: Decodable {
+        let technicalMessage: String
+        private enum CodingKeys: String, CodingKey {
+            case technicalMessage = "technical_message"
+        }
     }
     
 }

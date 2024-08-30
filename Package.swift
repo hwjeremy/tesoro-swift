@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "TesoroAPI",
-    platforms: [.macOS(.v14), .watchOS(.v10)],
+    platforms: [.macOS(.v14), .watchOS(.v10), .iOS(.v17), .visionOS(.v1)],
     products: [
         .library(
             name: "TesoroAPI",
