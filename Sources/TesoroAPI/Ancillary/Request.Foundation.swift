@@ -9,6 +9,11 @@ import Foundation
 
 
 #if !os(Linux)
+
+fileprivate struct Placebo: Decodable {
+    let placebo: String?
+}
+
 extension Request {
     
     static func make<C: Configuration, D: Decodable>(
@@ -29,6 +34,26 @@ extension Request {
         )
         
         return result
+        
+    }
+    
+    static func make<C: Configuration>(
+        configuration: C,
+        path: String,
+        method: Self.Method,
+        queryItems: Array<URLQueryItem> = [],
+        session: Session?
+    ) async throws -> Void {
+     
+        let _: Placebo = try await Self.make(
+            configuration: configuration,
+            path: path,
+            method: method,
+            queryItems: queryItems,
+            session: session
+        )
+        
+        return
         
     }
     
@@ -135,6 +160,7 @@ An HTTP request response could not be cast as an `HTTPURLResponse`
 
             print("A request to Tesoro API failed.")
             print("Request to: \(url.absoluteString)")
+            print("Request method: \(method.rawValue)")
             print("Request headers:")
             print(request.allHTTPHeaderFields ?? "<nil>")
             print("Request body: \(bodyData)")

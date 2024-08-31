@@ -10,6 +10,7 @@ import Foundation
 
 public struct Author {
     
+    public let agentId: Int
     public let name: String
 
 }

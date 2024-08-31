@@ -63,6 +63,7 @@ internal struct Request {
         
         case GET = "GET"
         case POST = "POST"
+        case DELETE = "DELETE"
         
     }
     
