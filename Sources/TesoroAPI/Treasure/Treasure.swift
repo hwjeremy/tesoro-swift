@@ -15,7 +15,7 @@ public struct Treasure: Decodable {
     public let indexid: Int
     public let created: Date
     public let message: String
-    //public let author: Author
+    public let author: Author
     public let location: Self.Location
     public let disposition: Disposition
     
