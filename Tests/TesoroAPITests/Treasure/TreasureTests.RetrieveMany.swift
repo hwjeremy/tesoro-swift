@@ -15,14 +15,19 @@ extension TreasureTests {
     func testRetrieveManyTreasures() async throws {
         
         let configuration = TestConfiguration()
+        let session = Session.fromCommandLine()
 
         let treasures = try await Treasure.retrieveMany(
             configuration: configuration,
             session: .fromCommandLine(),
-            author: .session(.fromCommandLine())
+            author: .session(session)
         )
         
         XCTAssert(treasures.count > 0)
+        
+        for treasure in treasures {
+            XCTAssert(treasure.author.agentId == session.agentId)
+        }
 
         return
         

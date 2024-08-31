@@ -43,6 +43,7 @@ Offset must be >= 0
             configuration: configuration,
             path: Self.retrieveManyPath,
             method: .GET,
+            queryItems: queryItems,
             session: session
         )
         

@@ -74,7 +74,7 @@ The application failed to initialise components of a URL for communicating \
 with the Tesoro API
 """)
         }
-        
+
         urlComponents.path += path
         if queryItems.count > 0 {
             urlComponents.queryItems = queryItems
