@@ -16,6 +16,8 @@ extension Treasure {
         configuration: C,
         session: Session,
         author: AuthorAgent? = nil,
+        order: Order = Order.descending,
+        orderBy: Self.OrderBy = .created,
         limit: Int = 10,
         offset: Int = 0
     ) async throws -> Array<Self> {
@@ -32,7 +34,9 @@ Offset must be >= 0
         
         var queryItems: Array<URLQueryItem> = [
             .init(name: "limit", value: "\(limit)"),
-            .init(name: "offset", value: "\(offset)")
+            .init(name: "offset", value: "\(offset)"),
+            .init(name: "order", value: order.rawValue),
+            .init(name: "order_by", value: orderBy.rawValue)
         ]
         
         if let a = author {
@@ -51,5 +55,12 @@ Offset must be >= 0
         
     }
     
-    
+    public enum OrderBy: String {
+        
+        case created = "created"
+        case location = "location"
+        case rating = "rating"
+
+    }
+
 }
