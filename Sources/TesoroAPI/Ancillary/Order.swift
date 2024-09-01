@@ -8,7 +8,11 @@
 import Foundation
 
 
-public enum Order: String {
+public enum Order: String, Identifiable, Hashable, Equatable, CaseIterable {
+    
     case ascending = "ascending"
     case descending = "descending"
+    
+    public var id: String { return self.rawValue }
+
 }

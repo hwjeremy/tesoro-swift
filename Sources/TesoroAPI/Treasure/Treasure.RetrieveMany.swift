@@ -55,11 +55,14 @@ Offset must be >= 0
         
     }
     
-    public enum OrderBy: String {
+    public enum OrderBy: String, Hashable, Equatable, CaseIterable,
+                            Identifiable {
         
         case created = "created"
         case location = "location"
         case rating = "rating"
+        
+        public var id: String { return self.rawValue }
 
     }
 
