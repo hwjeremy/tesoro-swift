@@ -44,8 +44,8 @@ extension Treasure {
 extension Treasure.Location {
     
     public static let example: Self = .init(
-        latitude: 31.53797,
-        longitude: 159.07504,
+        latitude: -31.537,
+        longitude: 159.074,
         altitude: 2.0
     )
     

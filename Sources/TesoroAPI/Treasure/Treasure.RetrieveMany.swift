@@ -16,6 +16,7 @@ extension Treasure {
         configuration: C,
         session: Session,
         author: AuthorAgent? = nil,
+        relativeTo relativeToLocation: Location? = nil,
         order: Order = Order.descending,
         orderBy: Self.OrderBy = .created,
         limit: Int = 10,
@@ -32,6 +33,12 @@ Offset must be >= 0
 """)
         }
         
+        if orderBy == .distance && relativeToLocation == nil {
+            throw TesoroError(clientFacingFriendlyMessage: """
+When ordering by distance, a relative-to location must be supplied
+""")
+        }
+        
         var queryItems: Array<URLQueryItem> = [
             .init(name: "limit", value: "\(limit)"),
             .init(name: "offset", value: "\(offset)"),
@@ -41,6 +48,17 @@ Offset must be >= 0
         
         if let a = author {
             queryItems.append(.init(name: "author", value: "\(a.agentId)"))
+        }
+        
+        if let rtl = relativeToLocation {
+            queryItems.append(.init(
+                name: "rt_latitude",
+                value: "\(rtl.latitude)"
+            ))
+            queryItems.append(.init(
+                name: "rt_longitude",
+                value: "\(rtl.longitude)"
+            ))
         }
         
         let results: Array<Self> = try await Request.make(
@@ -59,7 +77,7 @@ Offset must be >= 0
                             Identifiable {
         
         case created = "created"
-        case location = "location"
+        case distance = "distance"
         case rating = "rating"
         
         public var id: String { return self.rawValue }

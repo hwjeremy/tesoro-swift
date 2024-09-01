@@ -94,4 +94,42 @@ extension TreasureTests {
         
     }
     
+    func testRetrieveTreasuresByDistance() async throws {
+        
+        let configuration = TestConfiguration()
+        let session = Session.fromCommandLine()
+        
+        let treasures = try await Treasure.retrieveMany(
+            configuration: configuration,
+            session: session,
+            relativeTo: Treasure.Location.testLocation,
+            order: .ascending,
+            orderBy: .distance,
+            limit: 40,
+            offset: 0
+        )
+        
+        print(Treasure.Location.testLocation)
+        
+        guard treasures.count > 1 else { XCTFail(); return }
+        
+        guard let firstDistance = treasures.first?.distance else {
+            XCTFail(); return
+        }
+        
+        XCTAssert(firstDistance <= 0.01)
+        
+        var previousDistance: Double = 0
+        
+        for treasure in treasures {
+            guard let distance = treasure.distance else { XCTFail(); return }
+            guard distance >= previousDistance else { XCTFail(); return }
+            previousDistance = distance
+            continue
+        }
+        
+        return
+
+    }
+    
 }

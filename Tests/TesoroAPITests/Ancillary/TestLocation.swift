@@ -11,8 +11,8 @@ import TesoroAPI
 extension Treasure.Location {
     
     static let testLocation = Self(
-        latitude: 31.53797,
-        longitude: 159.07504,
+        latitude: -31.537,
+        longitude: 159.074,
         altitude: 2.0
     )
     

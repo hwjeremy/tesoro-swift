@@ -14,16 +14,7 @@ extension TreasureTests {
     func testCreateTreasure() async throws {
         
         let configuration = TestConfiguration()
-        
-        /*let _ = try await Treasure.create(
-            configuration: configuration,
-            session: .fromCommandLine(),
-            message: """
-Test treasure text
-""",
-            location: .testLocation
-        )*/
-        
+    
         let _ = try await Treasure.create(
             configuration: configuration,
             session: .fromCommandLine(),

@@ -17,6 +17,7 @@ public struct Treasure: Decodable {
     public let message: String
     public let author: Author
     public let location: Self.Location
+    public let distance: Double?
     public let disposition: Disposition
     
     public static let maxMessageLength = 280
