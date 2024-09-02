@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(CoreLocation)
 import CoreLocation
+#endif
 
 extension Treasure {
     
@@ -22,6 +24,7 @@ extension Treasure {
             self.altitude = altitude
         }
         
+        #if canImport(CoreLocation)
         public static func from(_ location: CLLocation) -> Self {
             return Self(
                 latitude: location.coordinate.latitude,
@@ -34,6 +37,21 @@ extension Treasure {
             guard let location = location else { return nil }
             return Self.from(location)
         }
+        
+        func toClLocation() -> CLLocation {
+            return CLLocation(
+                latitude: self.latitude,
+                longitude: self.longitude
+            )
+        }
+        
+        func toClLocationCoordinate2D() -> CLLocationCoordinate2D {
+            return CLLocationCoordinate2D(
+                latitude: self.latitude,
+                longitude: self.longitude
+            )
+        }
+        #endif
         
 
     }
