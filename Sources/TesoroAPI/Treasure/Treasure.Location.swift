@@ -38,14 +38,14 @@ extension Treasure {
             return Self.from(location)
         }
         
-        func toClLocation() -> CLLocation {
+        public func toClLocation() -> CLLocation {
             return CLLocation(
                 latitude: self.latitude,
                 longitude: self.longitude
             )
         }
         
-        func toClLocationCoordinate2D() -> CLLocationCoordinate2D {
+        public func toClLocationCoordinate2D() -> CLLocationCoordinate2D {
             return CLLocationCoordinate2D(
                 latitude: self.latitude,
                 longitude: self.longitude
