@@ -17,6 +17,7 @@ extension Treasure {
         session: Session,
         author: AuthorAgent? = nil,
         relativeTo relativeToLocation: Location? = nil,
+        discoveredBy discoveringAgent: AuthorAgent? = nil,
         order: Order = Order.descending,
         orderBy: Self.OrderBy = .created,
         limit: Int = 10,
@@ -58,6 +59,13 @@ When ordering by distance, a relative-to location must be supplied
             queryItems.append(.init(
                 name: "rt_longitude",
                 value: "\(rtl.longitude)"
+            ))
+        }
+        
+        if let d = discoveringAgent {
+            queryItems.append(.init(
+                name: "discovering_agent",
+                value: "\(d.agentId)"
             ))
         }
         
