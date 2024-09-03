@@ -8,7 +8,7 @@
 import Foundation
 
 
-public struct Author: Codable {
+public struct Author: Codable, Agent {
     
     public let agentId: Int
     public let name: String?

@@ -20,7 +20,7 @@ extension TreasureTests {
             configuration: TestConfiguration(),
             session: .fromCommandLine(),
             message: "For deletion",
-            location: .testLocation
+            location: .randomForTesting()
         )
         
         let retrievedSpecimen = try await Treasure.retrieve(

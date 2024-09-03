@@ -18,14 +18,10 @@ extension TreasureTests {
         let _ = try await Treasure.create(
             configuration: configuration,
             session: .fromCommandLine(),
-            message: "Test treasure known real location",
-            location: .init(
-                latitude: -33.893450686777925,
-                longitude: 151.2123368378304,
-                altitude: 33.708626
-            )
+            message: "Test treasure for creation",
+            location: .randomForTesting()
         )
-
+    
         return
         
     }

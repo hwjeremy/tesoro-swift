@@ -37,6 +37,26 @@ extension Request {
         
     }
     
+    static func make<C: Configuration, E: Encodable>(
+        configuration: C,
+        path: String,
+        method: Self.Method,
+        requestBody: E,
+        session: Session?
+    ) async throws -> Void {
+     
+        let _: Placebo = try await Self.make(
+            configuration: configuration,
+            path: path,
+            method: method,
+            requestBody: requestBody,
+            session: session
+        )
+        
+        return
+        
+    }
+    
     static func make<C: Configuration>(
         configuration: C,
         path: String,

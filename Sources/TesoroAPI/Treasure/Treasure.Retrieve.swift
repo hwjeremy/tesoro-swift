@@ -33,5 +33,18 @@ extension Treasure {
         
     }
     
+    public func refresh<C: Configuration>(
+        configuration: C,
+        session: Session
+    ) async throws -> Self {
+        
+        return try await Self.retrieve(
+            configuration: configuration,
+            session: session,
+            indexid: self.indexid
+        )
+        
+    }
+    
     
 }

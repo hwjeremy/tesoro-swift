@@ -16,4 +16,12 @@ extension Treasure.Location {
         altitude: 2.0
     )
     
+    static func randomForTesting() -> Self {
+        return Self(
+            latitude: Double.random(in: -70...70),
+            longitude: Double.random(in: -110...110),
+            altitude: Float.random(in: 0...20)
+        )
+    }
+    
 }

@@ -18,68 +18,31 @@ public struct Treasure: Decodable {
     public let author: Author
     public let location: Self.Location
     public let distance: Double?
+    public let orientation: Float?
+    public let discoveryCount: Int
+    public let positiveRatingCount: Int
+    public let negativeRatingCount: Int
+    public let retrievingAgentState: RetrievingAgentState?
     public let disposition: Disposition
     
     public static let maxMessageLength = 280
     public static let minMessageLength = 1
     
-    public static func create<C: Configuration>(
-        configuration: C,
-        session: Session,
-        message: String,
-        location: Self.Location,
-        orientation: Float? = nil
-    ) async throws -> Self {
+    private enum CodingKeys: String, CodingKey {
         
-        guard message.count <= Self.maxMessageLength else {
-            throw TesoroError(clientFacingFriendlyMessage: """
-Message length exceeds the maximum allowable: \(Self.maxMessageLength) \
-characters.
-""")
-        }
-        
-        guard message.count >= Self.minMessageLength else {
-            throw TesoroError(clientFacingFriendlyMessage: """
-Message length is below the minimum allowable: \(Self.minMessageLength)
-""")
-        }
-        
-        let payload = CreatePayload(
-            latitude: location.latitude,
-            longitude: location.longitude,
-            altitude: location.altitude,
-            orientation: orientation,
-            message: message
-        )
-        
-        let treasure: Self = try await Request.make(
-            configuration: configuration,
-            path: Self.path,
-            method: .POST,
-            requestBody: payload,
-            session: session
-        )
+        case indexid
+        case created
+        case message
+        case author
+        case location
+        case distance
+        case orientation
+        case discoveryCount = "discovery_count"
+        case positiveRatingCount = "positive_rating_count"
+        case negativeRatingCount = "negative_rating_count"
+        case retrievingAgentState = "retrieving_agent_state"
+        case disposition
 
-        return treasure
-
-    }
-    
-    private struct CreatePayload: Encodable {
-        
-        let latitude: Double
-        let longitude: Double
-        let altitude: Float
-        let orientation: Float?
-        let message: String
-        
-    }
-    
-    static func retrieveMany<C: Configuration>(
-        configuration: C
-    ) async throws -> Self {
-        
-        throw TesoroError.notImplemented
-        
     }
 
 }

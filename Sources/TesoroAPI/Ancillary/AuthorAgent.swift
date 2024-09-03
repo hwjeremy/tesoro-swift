@@ -8,12 +8,12 @@
 import Foundation
 
 
-public enum AuthorAgent {
+public enum AuthorAgent: Agent {
     
     case session(Session)
     case author(Author)
     
-    var agentId: Int {
+    public var agentId: Int {
         switch self {
         case .author(let author): return author.agentId
         case .session(let session): return session.agentId

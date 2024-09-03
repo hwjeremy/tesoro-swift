@@ -8,7 +8,7 @@
 import Foundation
 
 
-public struct Session: Decodable {
+public struct Session: Decodable, Agent {
     
     internal static let path = "/session"
     internal static let headerIdName = "X-Session-ID"
