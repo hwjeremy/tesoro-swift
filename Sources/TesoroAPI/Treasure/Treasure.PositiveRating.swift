@@ -19,7 +19,7 @@ extension Treasure {
             session: Session,
             treasure: Treasure,
             ratingAgent: A
-        ) async throws -> Void {
+        ) async throws -> Treasure {
             
             guard treasure.hasBeenRatedPositively(
                 by: ratingAgent
@@ -34,7 +34,7 @@ This GeoData has already been rated positively.
                 rating_agent: ratingAgent.agentId
             )
             
-            try await Request.make(
+            let treasure: Treasure = try await Request.make(
                 configuration: configuration,
                 path: Self.path,
                 method: .POST,
@@ -42,7 +42,7 @@ This GeoData has already been rated positively.
                 session: session
             )
             
-            return
+            return treasure
             
         }
 
@@ -56,7 +56,7 @@ This GeoData has already been rated positively.
             session: Session,
             treasure: Treasure,
             ratingAgent: A
-        ) async throws -> Void {
+        ) async throws -> Treasure {
             
             guard treasure.hasBeenRatedPositively(
                 by: ratingAgent
@@ -71,7 +71,7 @@ This GeoData is not rated positively
                 rating_agent: ratingAgent.agentId
             )
             
-            try await Request.make(
+            let treasure: Treasure = try await Request.make(
                 configuration: configuration,
                 path: Self.path,
                 method: .DELETE,
@@ -79,7 +79,7 @@ This GeoData is not rated positively
                 session: session
             )
             
-            return
+            return treasure
             
         }
         

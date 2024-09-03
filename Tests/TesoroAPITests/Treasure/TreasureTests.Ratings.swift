@@ -28,7 +28,7 @@ extension TreasureTests {
             XCTFail(); return
         }
         
-        try await Treasure.PositiveRating.create(
+        let _ = try await Treasure.PositiveRating.create(
             configuration: configuration,
             session: session,
             treasure: subject,
@@ -46,7 +46,7 @@ extension TreasureTests {
             by: session
         ) == true else { XCTFail(); return }
         
-        try await Treasure.PositiveRating.delete(
+        let _ = try await Treasure.PositiveRating.delete(
             configuration: configuration,
             session: session,
             treasure: positivelyRatedSubject,
@@ -66,7 +66,7 @@ extension TreasureTests {
             XCTFail(); return
         }
         
-        try await Treasure.NegativeRating.create(
+        let _ = try await Treasure.NegativeRating.create(
             configuration: configuration,
             session: session,
             treasure: subject,
@@ -84,7 +84,7 @@ extension TreasureTests {
             by: session
         ) == true else { XCTFail(); return }
         
-        try await Treasure.NegativeRating.delete(
+        let _ = try await Treasure.NegativeRating.delete(
             configuration: configuration,
             session: session,
             treasure: negativelyRatedSubject,

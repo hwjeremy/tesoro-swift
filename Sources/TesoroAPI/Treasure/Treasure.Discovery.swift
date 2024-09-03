@@ -19,7 +19,7 @@ extension Treasure {
             session: Session,
             treasure: Treasure,
             discoveringAgent: A
-        ) async throws -> Void {
+        ) async throws -> Treasure {
             
             guard treasure.hasBeenDiscovered(
                 by: discoveringAgent
@@ -34,7 +34,7 @@ This GeoData has already been discovered.
                 discovering_agent: discoveringAgent.agentId
             )
             
-            try await Request.make(
+            let treasure: Treasure = try await Request.make(
                 configuration: configuration,
                 path: Self.path,
                 method: .POST,
@@ -42,7 +42,7 @@ This GeoData has already been discovered.
                 session: session
             )
             
-            return
+            return treasure
             
         }
 

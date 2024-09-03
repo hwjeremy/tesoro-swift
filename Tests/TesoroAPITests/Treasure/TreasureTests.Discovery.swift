@@ -32,7 +32,7 @@ extension TreasureTests {
             XCTFail(); return
         }
         
-        try await Treasure.Discovery.create(
+        let _ = try await Treasure.Discovery.create(
             configuration: configuration,
             session: session,
             treasure: subject,
