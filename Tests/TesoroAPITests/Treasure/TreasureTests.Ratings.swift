@@ -40,6 +40,7 @@ extension TreasureTests {
             session: session
         )
         
+        XCTAssert(positivelyRatedSubject != subject)
         XCTAssert(positivelyRatedSubject.positiveRatingCount == 1)
 
         guard positivelyRatedSubject.hasBeenRatedPositively(

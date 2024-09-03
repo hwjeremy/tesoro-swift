@@ -10,10 +10,12 @@ import Foundation
 
 extension Treasure: Equatable {
     
-    
     // TODO: Account for updates via an .updated property
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs.indexid == rhs.indexid
+        return (
+            lhs.indexid == rhs.indexid
+            && lhs.retrieved == rhs.retrieved
+        )
     }
     
 }
