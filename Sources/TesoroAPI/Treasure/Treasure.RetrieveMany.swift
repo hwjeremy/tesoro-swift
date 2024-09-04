@@ -17,7 +17,7 @@ extension Treasure {
         session: Session,
         author: AuthorAgent? = nil,
         relativeTo relativeToLocation: Location? = nil,
-        discoveredBy discoveringAgent: AuthorAgent? = nil,
+        discoveryState: Self.Discovery.State = .any,
         order: Order = Order.descending,
         orderBy: Self.OrderBy = .created,
         limit: Int = 10,
@@ -62,12 +62,7 @@ When ordering by distance, a relative-to location must be supplied
             ))
         }
         
-        if let d = discoveringAgent {
-            queryItems.append(.init(
-                name: "discovering_agent",
-                value: "\(d.agentId)"
-            ))
-        }
+        queryItems.append(contentsOf: discoveryState.makeQueryItems())
         
         let results: Array<Self> = try await Request.make(
             configuration: configuration,

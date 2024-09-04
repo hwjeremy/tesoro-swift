@@ -12,10 +12,10 @@ extension Treasure {
     
     public struct RetrievingAgentState: Decodable {
         
-        let retrievingAgentId: Int
-        let hasDiscovered: Bool
-        let hasRatedPositively: Bool
-        let hasRatedNegatively: Bool
+        public let retrievingAgentId: Int
+        public let hasDiscovered: Bool
+        public let hasRatedPositively: Bool
+        public let hasRatedNegatively: Bool
         
         private enum CodingKeys: String, CodingKey {
             

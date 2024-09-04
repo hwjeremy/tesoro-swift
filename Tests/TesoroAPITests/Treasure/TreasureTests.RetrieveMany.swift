@@ -162,7 +162,7 @@ extension TreasureTests {
         let discovered = try await Treasure.retrieveMany(
             configuration: configuration,
             session: session,
-            discoveredBy: .session(session),
+            discoveryState: .discoveredBySpecificAgent(.session(session)),
             order: .descending,
             orderBy: .created,
             limit: 1

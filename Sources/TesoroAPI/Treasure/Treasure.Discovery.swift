@@ -51,6 +51,40 @@ This GeoData has already been discovered.
             let discovering_agent: Int
         }
         
+        public enum State {
+            
+            case neverDiscovered
+            case discoveredAtLeastOnce
+            case discoveredBySpecificAgent(AuthorAgent)
+            case neverDiscoveredBySpecificAgent(AuthorAgent)
+            case any
+            
+            internal func makeQueryItems() -> Array<URLQueryItem> {
+                
+                switch self {
+                    
+                case .discoveredAtLeastOnce:
+                    return [.init(name: "discovered", value: "\(true)")]
+                case .neverDiscovered:
+                    return [.init(name: "discovered", value: "\(false))")]
+                case .discoveredBySpecificAgent(let a):
+                    return [
+                        .init(name: "discovered", value: "\(true)"),
+                        .init(name: "discovering_agent", value: "\(a.agentId)")
+                    ]
+                case .neverDiscoveredBySpecificAgent(let a):
+                    return [
+                        .init(name: "discovered", value: "\(false)"),
+                        .init(name: "discovering_agent", value: "\(a.agentId)")
+                    ]
+                case .any:
+                    return []
+                }
+                
+            }
+
+        }
+        
     }
     
 }

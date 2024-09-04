@@ -21,6 +21,8 @@ is under public source control.
         
     }
     
+    // Disabled pending availability of token via command line
+    /*
     func testCreateAppleIdSession() async throws -> Void {
         
         let _ = try await Session.create(
@@ -32,6 +34,7 @@ is under public source control.
         return
         
     }
+    */
     
 }
  
