@@ -94,6 +94,47 @@ extension TreasureTests {
         
     }
     
+    func testRetrieveTreasuresExcludingAuthor() async throws {
+        
+        let configuration = TestConfiguration()
+        let session = Session.fromCommandLine()
+        
+        let treasures = try await Treasure.retrieveMany(
+            configuration: configuration,
+            session: session,
+            author: .session(session)
+        )
+        
+        if treasures.count < 1 {
+            
+            let _ = try await Treasure.create(
+                configuration: configuration,
+                session: session,
+                message: "Test treasure for discovery",
+                location: .randomForTesting()
+            )
+            
+            guard try await Treasure.retrieveMany(
+                configuration: configuration,
+                session: session,
+                author: .session(session)
+            ).first != nil else { XCTFail(); return }
+            
+        }
+        
+        let shouldBeEmpty = try await Treasure.retrieveMany(
+            configuration: configuration,
+            session: session,
+            author: .session(session),
+            excludeAuthor: .session(session)
+        )
+        
+        XCTAssert(shouldBeEmpty.count == 0)
+        
+        return
+        
+    }
+    
     func testRetrieveTreasuresByDistance() async throws {
         
         let configuration = TestConfiguration()

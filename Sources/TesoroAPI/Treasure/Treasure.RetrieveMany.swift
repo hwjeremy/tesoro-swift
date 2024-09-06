@@ -18,6 +18,7 @@ extension Treasure {
         author: AuthorAgent? = nil,
         relativeTo relativeToLocation: Location? = nil,
         discoveryState: Self.Discovery.State = .any,
+        excludeAuthor: AuthorAgent? = nil,
         order: Order = Order.descending,
         orderBy: Self.OrderBy = .created,
         limit: Int = 10,
@@ -49,6 +50,13 @@ When ordering by distance, a relative-to location must be supplied
         
         if let a = author {
             queryItems.append(.init(name: "author", value: "\(a.agentId)"))
+        }
+        
+        if let e = excludeAuthor {
+            queryItems.append(.init(
+                name: "exclude_author",
+                value: "\(e.agentId)"
+            ))
         }
         
         if let rtl = relativeToLocation {
