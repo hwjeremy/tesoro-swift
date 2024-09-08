@@ -15,11 +15,13 @@ extension Treasure.Chain {
         public let chainId: Int
         public let sequence: Int
         public let previousParticipantFound: Bool?
+        public let nextParticipantFound: Bool?
         
         private enum CodingKeys: String, CodingKey {
             case chainId = "chain_id"
             case sequence
             case previousParticipantFound = "previous_participant_found"
+            case nextParticipantFound = "next_participant_found"
         }
 
     }

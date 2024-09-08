@@ -30,6 +30,8 @@ public struct Treasure: Decodable {
     public static let maxMessageLength = 280
     public static let minMessageLength = 1
     
+    public var isPartOfChain: Bool { return self.chainPosition != nil }
+    
     private enum CodingKeys: String, CodingKey {
         
         case indexid

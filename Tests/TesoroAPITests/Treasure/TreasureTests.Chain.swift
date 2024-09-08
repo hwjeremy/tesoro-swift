@@ -66,6 +66,7 @@ extension TreasureTests {
         XCTAssert(p1r.chainPosition?.chainId == chain.indexid)
         XCTAssert(p1r.hasBeenDiscovered(by: session) == true)
         XCTAssert(p1r.chainPosition?.previousParticipantFound == nil)
+        XCTAssert(p1r.chainPosition?.nextParticipantFound == false)
         
         let p2r = try await p2.refresh(
             configuration: configuration,
@@ -76,6 +77,7 @@ extension TreasureTests {
         XCTAssert(p2r.chainPosition?.sequence == 2)
         XCTAssert(p2r.chainPosition?.chainId == chain.indexid)
         XCTAssert(p2r.chainPosition?.previousParticipantFound == true)
+        XCTAssert(p2r.chainPosition?.nextParticipantFound == nil)
         
         try await retrievedChain.delete(
             configuration: configuration,
@@ -105,12 +107,6 @@ The Tesoro API responded to a request with a 404 code
         XCTAssert(didHave404 == true)
         
         return
-        
-    }
-    
-    func testDeleteChain() async throws -> Void {
-        
-        
         
     }
     
