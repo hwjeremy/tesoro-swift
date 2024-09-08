@@ -10,7 +10,7 @@ import Foundation
 
 public struct TesoroError: Error {
     
-    let clientFacingFriendlyMessage: String
+    public let clientFacingFriendlyMessage: String
     
     static let notImplemented: Self = .init(
         clientFacingFriendlyMessage: """

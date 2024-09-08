@@ -12,15 +12,29 @@ import CryptoKit
 internal struct Request {
     
     internal struct PlaceboEncodable: Encodable { let p: Int }
-    internal static let jsonEncoder = JSONEncoder()
-    internal static let jsonDecoder: JSONDecoder = {
+    
+    internal static let jsonEncoder: JSONEncoder = {
         
+        let encoder = JSONEncoder()
+        
+        encoder.dateEncodingStrategy = .custom({ date, encoder in
+            let doubleValue = date.timeIntervalSince1970
+            try doubleValue.encode(to: encoder)
+            return
+        })
+        
+        return encoder
+        
+    }()
+
+    internal static let jsonDecoder: JSONDecoder = {
+
         let decoder = JSONDecoder()
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSS"
-        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+        decoder.dateDecodingStrategy = .custom({ decoder in
+            let container = try decoder.singleValueContainer()
+            let timeIntervalSinceEpoch = try container.decode(Double.self)
+            return Date(timeIntervalSince1970: timeIntervalSinceEpoch)
+        })
         
         return decoder
         

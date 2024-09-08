@@ -19,6 +19,8 @@ extension Treasure {
         relativeTo relativeToLocation: Location? = nil,
         discoveryState: Self.Discovery.State = .any,
         excludeAuthor: AuthorAgent? = nil,
+        createdAtOrAfter: Date? = nil,
+        createdBefore: Date? = nil,
         order: Order = Order.descending,
         orderBy: Self.OrderBy = .created,
         limit: Int = 10,
@@ -56,6 +58,20 @@ When ordering by distance, a relative-to location must be supplied
             queryItems.append(.init(
                 name: "exclude_author",
                 value: "\(e.agentId)"
+            ))
+        }
+        
+        if let caoa = createdAtOrAfter {
+            queryItems.append(.init(
+                name: "created_at_or_after",
+                value: "\(caoa.timeIntervalSince1970)"
+            ))
+        }
+        
+        if let cb = createdBefore {
+            queryItems.append(.init(
+                name: "created_before",
+                value: "\(cb.timeIntervalSince1970)"
             ))
         }
         

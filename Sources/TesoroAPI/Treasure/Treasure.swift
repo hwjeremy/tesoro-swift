@@ -24,6 +24,7 @@ public struct Treasure: Decodable {
     public let negativeRatingCount: Int
     public let retrievingAgentState: RetrievingAgentState?
     public let retrieved: Date
+    public let chainPosition: Chain.Position?
     public let disposition: Disposition
     
     public static let maxMessageLength = 280
@@ -43,6 +44,7 @@ public struct Treasure: Decodable {
         case negativeRatingCount = "negative_rating_count"
         case retrievingAgentState = "retrieving_agent_state"
         case retrieved
+        case chainPosition = "chain_position"
         case disposition
 
     }

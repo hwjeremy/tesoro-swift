@@ -216,4 +216,56 @@ extension TreasureTests {
         return
     }
     
+    func testRetrieveTreasuresByTime() async throws {
+        
+        let configuration = TestConfiguration()
+        let session = Session.fromCommandLine()
+        
+        let start = Date()
+
+        guard let startCount = try await Treasure.retrieveMany(
+            configuration: configuration,
+            session: session,
+            limit: 1
+        ).first?.disposition.count else { XCTFail(); return }
+        
+        let _ = try await Treasure.create(
+            configuration: configuration,
+            session: session,
+            message: "Test Treasure for creation time",
+            location: .randomForTesting()
+        )
+        
+        guard let postCreationCount = try await Treasure.retrieveMany(
+            configuration: configuration,
+            session: session,
+            limit: 1
+        ).first?.disposition.count else { XCTFail(); return }
+        
+        guard postCreationCount == startCount + 1 else {
+            XCTFail(); return
+        }
+        
+        guard let postCreationCountAfter = try await Treasure.retrieveMany(
+            configuration: configuration,
+            session: session,
+            createdAtOrAfter: start,
+            limit: 1
+        ).first?.disposition.count else { XCTFail(); return }
+        
+        XCTAssert(postCreationCountAfter == 1)
+        
+        guard let postCreationCountBefore = try await Treasure.retrieveMany(
+            configuration: configuration,
+            session: session,
+            createdBefore: start,
+            limit: 1
+        ).first?.disposition.count else { XCTFail(); return }
+        
+        XCTAssert(postCreationCountBefore == startCount)
+        
+        return
+
+    }
+    
 }

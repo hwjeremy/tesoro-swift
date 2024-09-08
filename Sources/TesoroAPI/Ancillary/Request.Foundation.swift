@@ -137,7 +137,7 @@ API
         
         if let body = requestBody {
             
-            let jsonData = try JSONEncoder().encode(body)
+            let jsonData = try Self.jsonEncoder.encode(body)
             request.httpBody = jsonData
             
             request.addValue(
