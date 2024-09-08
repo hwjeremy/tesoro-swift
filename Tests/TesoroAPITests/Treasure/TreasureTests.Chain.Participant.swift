@@ -70,6 +70,22 @@ extension TreasureTests {
         XCTAssert(dChain.participantTreasureIds.last == p3.indexid)
         XCTAssert(!dChain.participantTreasureIds.contains(p2.indexid))
         
+        let p2r = try await p2.refresh(
+            configuration: configuration,
+            session: session
+        )
+        
+        XCTAssert(p2r.chainPosition == nil)
+        
+        let p3r = try await p3.refresh(
+            configuration: configuration,
+            session: session
+        )
+        
+        XCTAssert(p3r.chainPosition != nil)
+        XCTAssert(p3r.chainPosition?.chainId == chain.indexid)
+        XCTAssert(p3r.chainPosition?.sequence == 2)
+
         return
         
     }

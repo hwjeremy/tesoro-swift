@@ -49,6 +49,34 @@ extension TreasureTests {
         
         XCTAssert(retrievedChain == chain)
         
+        let _ = try await Treasure.Discovery.create(
+            configuration: configuration,
+            session: session,
+            treasure: p1,
+            discoveringAgent: session
+        )
+        
+        let p1r = try await p1.refresh(
+            configuration: configuration,
+            session: session
+        )
+        
+        XCTAssert(p1r.chainPosition != nil)
+        XCTAssert(p1r.chainPosition?.sequence == 1)
+        XCTAssert(p1r.chainPosition?.chainId == chain.indexid)
+        XCTAssert(p1r.hasBeenDiscovered(by: session) == true)
+        XCTAssert(p1r.chainPosition?.previousParticipantFound == nil)
+        
+        let p2r = try await p2.refresh(
+            configuration: configuration,
+            session: session
+        )
+        
+        XCTAssert(p2r.chainPosition != nil)
+        XCTAssert(p2r.chainPosition?.sequence == 2)
+        XCTAssert(p2r.chainPosition?.chainId == chain.indexid)
+        XCTAssert(p2r.chainPosition?.previousParticipantFound == true)
+        
         try await retrievedChain.delete(
             configuration: configuration,
             session: session

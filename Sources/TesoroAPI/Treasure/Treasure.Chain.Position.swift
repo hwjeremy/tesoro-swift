@@ -12,9 +12,9 @@ extension Treasure.Chain {
     
     public struct Position: Decodable {
         
-        let chainId: Int
-        let sequence: Int
-        let previousParticipantFound: Bool?
+        public let chainId: Int
+        public let sequence: Int
+        public let previousParticipantFound: Bool?
         
         private enum CodingKeys: String, CodingKey {
             case chainId = "chain_id"

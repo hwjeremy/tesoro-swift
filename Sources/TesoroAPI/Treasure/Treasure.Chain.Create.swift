@@ -52,6 +52,8 @@ Each of the GeoData participating in a Trail must be unique
             participant_treasure_ids: participants.map { $0.indexid }
         )
         
+        print("Creation payload: \(payload)")
+        
         let chain: Self = try await Request.make(
             configuration: configuration,
             path: Self.path,
