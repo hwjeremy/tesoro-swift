@@ -85,7 +85,81 @@ extension TreasureTests {
         XCTAssert(p3r.chainPosition != nil)
         XCTAssert(p3r.chainPosition?.chainId == chain.indexid)
         XCTAssert(p3r.chainPosition?.sequence == 2)
-
+        
+        return
+        
+    }
+    
+    func testRetrieveTreasuresFilteringByChainParticipation()
+        async throws -> Void {
+        
+        let start = Date()
+        
+        let configuration = TestConfiguration()
+        let session = Session.fromCommandLine()
+        
+        let p1 = try await Treasure.create(
+            configuration: configuration,
+            session: session,
+            message: "Test treasure for Chain filtering",
+            location: .randomForTesting()
+        )
+        
+        let p2 = try await Treasure.create(
+            configuration: configuration,
+            session: session,
+            message: "Test treasure for Chain filtering",
+            location: .randomForTesting()
+        )
+        
+        let chain = try await Treasure.Chain.create(
+            configuration: configuration,
+            session: session,
+            participants: [p1, p2]
+        )
+        
+        let _ = try await Treasure.create(
+            configuration: configuration,
+            session: session,
+            message: "Test treasure for Chain filtering",
+            location: .randomForTesting()
+        )
+        
+        let noFilter = try await Treasure.retrieveMany(
+            configuration: configuration,
+            session: session,
+            createdAtOrAfter: start
+        )
+        
+        XCTAssert(noFilter.count == 3)
+        
+        let withChain = try await Treasure.retrieveMany(
+            configuration: configuration,
+            session: session,
+            createdAtOrAfter: start,
+            participatingInAnyChain: true
+        )
+        
+        XCTAssert(withChain.count == 2)
+        
+        let withoutChain = try await Treasure.retrieveMany(
+            configuration: configuration,
+            session: session,
+            createdAtOrAfter: start,
+            participatingInAnyChain: false
+        )
+        
+        XCTAssert(withoutChain.count == 1)
+        
+        let specificChain = try await Treasure.retrieveMany(
+            configuration: configuration,
+            session: session,
+            participatingInChain: chain
+        )
+        
+        print("Specific chain: \(specificChain.count)")
+        XCTAssert(specificChain.count == 2)
+        
         return
         
     }

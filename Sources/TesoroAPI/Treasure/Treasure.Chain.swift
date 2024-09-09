@@ -13,7 +13,7 @@ extension Treasure {
     public struct Chain: Decodable {
         
         public static let MAX_PARTICIPANT_COUNT = 10
-        public static let MIN_PARTICIPANT_COUNT = 1
+        public static let MIN_PARTICIPANT_COUNT = 2
         
         internal static let path = Treasure.path + "/chain"
         
@@ -33,7 +33,7 @@ extension Treasure {
     
         }
 
-    }    
+    }
     
 }
 
