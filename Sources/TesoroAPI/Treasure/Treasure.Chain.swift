@@ -20,6 +20,8 @@ extension Treasure {
         public let indexid: Int
         public let authorId: Int
         public let participantTreasureIds: Array<Int>
+        public let extentMetres: Double
+        public let centroid: Treasure.Location
         
         public var participantCount: Int {
             return self.participantTreasureIds.count
@@ -30,6 +32,8 @@ extension Treasure {
             case indexid
             case authorId = "author_id"
             case participantTreasureIds = "participant_ids"
+            case extentMetres = "extent_metres"
+            case centroid = "centroid"
     
         }
         
