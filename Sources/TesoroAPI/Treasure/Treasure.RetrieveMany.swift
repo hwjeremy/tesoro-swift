@@ -21,8 +21,7 @@ extension Treasure {
         excludeAuthor: AuthorAgent? = nil,
         createdAtOrAfter: Date? = nil,
         createdBefore: Date? = nil,
-        participatingInAnyChain: Bool? = nil,
-        participatingInChain: Treasure.Chain? = nil,
+        chainParticipation: Treasure.Chain.Participation = .any,
         order: Order = Order.descending,
         orderBy: Self.OrderBy = .created,
         limit: Int = 10,
@@ -88,16 +87,7 @@ When ordering by distance, a relative-to location must be supplied
             ))
         }
         
-        if let iiac = participatingInAnyChain { queryItems.append(.init(
-            name: "included_in_any_chain",
-            value: "\(iiac)"
-        ))}
-        
-        if let pic = participatingInChain { queryItems.append(.init(
-            name: "participating_in_chain",
-            value: "\(pic.indexid)"
-        ))}
-
+        queryItems.append(contentsOf: chainParticipation.makeQueryItems())
         queryItems.append(contentsOf: discoveryState.makeQueryItems())
         
         let results: Array<Self> = try await Request.make(

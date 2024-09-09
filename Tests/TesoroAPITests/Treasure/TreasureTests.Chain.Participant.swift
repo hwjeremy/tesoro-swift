@@ -137,7 +137,7 @@ extension TreasureTests {
             configuration: configuration,
             session: session,
             createdAtOrAfter: start,
-            participatingInAnyChain: true
+            chainParticipation: .participatingInAnyChain
         )
         
         XCTAssert(withChain.count == 2)
@@ -146,7 +146,7 @@ extension TreasureTests {
             configuration: configuration,
             session: session,
             createdAtOrAfter: start,
-            participatingInAnyChain: false
+            chainParticipation: .notParticipatingInAnyChain
         )
         
         XCTAssert(withoutChain.count == 1)
@@ -154,7 +154,7 @@ extension TreasureTests {
         let specificChain = try await Treasure.retrieveMany(
             configuration: configuration,
             session: session,
-            participatingInChain: chain
+            chainParticipation: .participatingInASpecificChain(chain)
         )
         
         print("Specific chain: \(specificChain.count)")
